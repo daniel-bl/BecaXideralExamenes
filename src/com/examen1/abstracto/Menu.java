@@ -15,7 +15,7 @@ public class Menu {
 			 System.out.println("3. Vendedores");
 			 System.out.println("Ingrese una opcion: ");
 			 eleccion = sc.nextInt();
-		 }while(eleccion<=0 || eleccion>2);
+		 }while(eleccion<=0 || eleccion>3);
 		return eleccion;
 	}
 	//Menu secundario
@@ -29,7 +29,7 @@ public class Menu {
 			 System.out.println("3. Reducir salario");
 			 System.out.println("Ingrese una opcion: ");
 			 eleccion = sc.nextInt();
-		 }while(eleccion<=0 || eleccion>2);
+		 }while(eleccion<=0 || eleccion>3);
 		return eleccion;	
 	}
 	//Menu para ingresar cantidad
