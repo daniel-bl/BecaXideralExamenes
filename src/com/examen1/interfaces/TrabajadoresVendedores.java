@@ -1,4 +1,4 @@
-package com.pregunta7.interfaces;
+package com.examen1.interfaces;
 
 public class TrabajadoresVendedores implements Nomina{
 

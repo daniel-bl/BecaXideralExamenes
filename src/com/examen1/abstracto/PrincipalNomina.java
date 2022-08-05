@@ -1,4 +1,4 @@
-package com.pregunta7.abstracto;
+package com.examen1.abstracto;
 
 public class PrincipalNomina {
 
