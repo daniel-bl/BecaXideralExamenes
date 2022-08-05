@@ -4,7 +4,7 @@ public class TrabajadoresOficina extends Nomina{
 	int salarioOficina;
 	@Override
 	public String pagar() {
-		return "Se le ha pagado a los trabajadores de oficina";
+		return "Se le ha pagado"+salarioOficina+" a los trabajadores de oficina";
 	}
 	
 	@Override

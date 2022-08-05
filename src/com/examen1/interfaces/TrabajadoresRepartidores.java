@@ -4,7 +4,7 @@ public class TrabajadoresRepartidores implements Nomina{
 	int salarioRepartidores;
 	@Override
 	public String pagar() {
-		return "Se le ha pagado a los repartidores";
+		return "Se le ha pagado: "+salarioRepartidores+" a los repartidores";
 	}
 
 	@Override

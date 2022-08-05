@@ -4,7 +4,7 @@ public class TrabajadoresVendedores extends Nomina{
 	int salarioVendedores;
 	@Override
 	public String pagar() {
-		return "Se le ha pagado a los vendedores";
+		return "Se le ha pagado: "+salarioVendedores+" a los vendedores";
 	}
 	@Override
 	public String aumentarSalario(int aumento) {
