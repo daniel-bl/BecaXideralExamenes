@@ -1,7 +1,7 @@
 package com.examen1.interfaces;
 
 public class TrabajadoresRepartidores implements Nomina{
-	int salarioRepartidores;
+	int salarioRepartidores = 8000;
 	@Override
 	public String pagar() {
 		return "Se le ha pagado: "+salarioRepartidores+" a los repartidores";

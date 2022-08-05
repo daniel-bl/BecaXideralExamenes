@@ -5,9 +5,7 @@ public class Area {
 		switch(area) {
 		case 1: return new TrabajadoresOficina();
 		case 2: return new TrabajadoresRepartidores();
-		case 3: return new TrabajadoresVendedores();
-		default:
+		default: return new TrabajadoresVendedores();	
 		}
-		return null;
 	}
 }

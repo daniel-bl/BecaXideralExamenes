@@ -12,7 +12,7 @@ public class Menu {
 			 System.out.println("**Escoja un Area**");
 			 System.out.println("1. Oficinas");
 			 System.out.println("2. Repartidores");
-			 System.out.println("2. Vendedores");
+			 System.out.println("3. Vendedores");
 			 System.out.println("Ingrese una opcion: ");
 			 eleccion = sc.nextInt();
 		 }while(eleccion<=0 || eleccion>2);
@@ -23,11 +23,10 @@ public class Menu {
 		Scanner sc = new Scanner(System.in);
 		 int eleccion;
 		 do {
-			 System.out.println("**Sistema de nomina**");
 			 System.out.println("**Elija una accion**");
 			 System.out.println("1. Pagar nomina");
 			 System.out.println("2. Aumentar salario");
-			 System.out.println("2. Reducir salario");
+			 System.out.println("3. Reducir salario");
 			 System.out.println("Ingrese una opcion: ");
 			 eleccion = sc.nextInt();
 		 }while(eleccion<=0 || eleccion>2);
