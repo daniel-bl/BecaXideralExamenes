@@ -1,3 +1,8 @@
+/*	Becerril Becerril Daniel
+ * 	Proyecto Sistema de Empleados
+ * 	12/08/2022
+ * 	Prueba para verificar conexión a la BD
+ * */
 package com.luv2code.web.jdbc;
 
 import java.io.IOException;
@@ -32,22 +37,23 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// Step 1:  Set up the printwriter
+		//Instanciar printwriter
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/plain");
 		
-		// Step 2:  Get a connection to the database	
+		// Hacer la conexión a la BD	
 		try(Connection myConn = dataSource.getConnection();
 				Statement myStmt = myConn.createStatement(); 	
 				ResultSet myRs = myStmt.executeQuery("select * from student");
 				) {
 
-			// Step 5:  Process the result set
+			// Traer emails
 			while (myRs.next()) {
 				String email = myRs.getString("email");
 				out.println(email);
 			}
 		}
+		//En caso de que la conexión falle
 		catch (Exception exc) {
 			System.out.println("******ERROR******");
 			exc.printStackTrace();

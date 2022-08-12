@@ -1,3 +1,8 @@
+/*	Becerril Becerril Daniel
+ * 	Proyecto Sistema de Empleados
+ * 	12/08/2022
+ * 	Prueba para verificar funcionamiento
+ * */
 package com.luv2code.web.jdbc;
 
 import java.io.IOException;
@@ -19,14 +24,12 @@ public class Prueba extends HttpServlet {
      */
     public Prueba() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: PRUEBA").append(request.getContextPath());
 	}
 
@@ -34,7 +37,6 @@ public class Prueba extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -1,3 +1,8 @@
+/*	Becerril Becerril Daniel
+ * 	Proyecto Sistema de Empleados
+ * 	12/08/2022
+ * 	Controlador Servlet
+ * */
 package com.luv2code.web.jdbc;
 
 import java.io.IOException;
@@ -18,8 +23,8 @@ import javax.sql.DataSource;
 @WebServlet("/EmpleadoControllerServlet")
 public class EmpleadoControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private EmpleadotDbUtil studentDbUtil;
+	//Instancia de la BD
+	private EmpleadotDbUtil empleadoDbUtil;
 	
 	@Resource(name="jdbc/web_student_tracker")
 	private DataSource dataSource;
@@ -27,52 +32,49 @@ public class EmpleadoControllerServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		
-		// create our student db util ... and pass in the conn pool / datasource
+		// crear instancia del dbempleado util
 		try {
-			studentDbUtil = new EmpleadotDbUtil(dataSource);
+			empleadoDbUtil = new EmpleadotDbUtil(dataSource);
 		}
 		catch (Exception exc) {
 			throw new ServletException(exc);
 		}
 	}
-	
+	//Menu que evalua un comando para ejecutar una acción crud
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			// read the "command" parameter
+			// Lee el comando recibido
 			String theCommand = request.getParameter("command");
-			
-			// if the command is missing, then default to listing students
+			// si el comando es null le asigna list para que muestre la lista de empleados
 			if (theCommand == null) {
 				theCommand = "LIST";
 			}
-			
-			// route to the appropriate method
+			//Evalua el comando para asignarlo al método correspondiente
 			switch (theCommand) {
 			
 			case "LIST":
-				listStudents(request, response);
+				listEmpleado(request, response);
 				break;
 				
 			case "ADD":
-				addStudent(request, response);
+				addEmpleado(request, response);
 				break;
 				
 			case "LOAD":
-				loadStudent(request, response);
+				loadEmpleado(request, response);
 				break;
 				
 			case "UPDATE":
-				updateStudent(request, response);
+				updateEmpleado(request, response);
 				break;
 			
 			case "DELETE":
-				deleteStudent(request, response);
+				deleteEmpleado(request, response);
 				break;
 				
 			default:
-				listStudents(request, response);
+				listEmpleado(request, response);
 			}
 				
 		}
@@ -81,100 +83,70 @@ public class EmpleadoControllerServlet extends HttpServlet {
 		}
 		
 	}
-
-	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
+	//---CRUD---
+	//Borrar empleado
+	private void deleteEmpleado(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		// read student id from form data
-		String theStudentId = request.getParameter("studentId");
-		
-		// delete student from database
-		studentDbUtil.deleteStudent(theStudentId);
-		
-		// send them back to "list students" page
-		listStudents(request, response);
+		//recupera el id
+		String theEmpleadoId = request.getParameter("empleadoId");
+		//Elimina el empleado
+		empleadoDbUtil.deleteEmpleado(theEmpleadoId);
+		//Regresa a mostrar la lista de empleados
+		listEmpleado(request, response);
 	}
-
-	private void updateStudent(HttpServletRequest request, HttpServletResponse response)
+	//Actualizar empleado
+	private void updateEmpleado(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		// read student info from form data
-		int id = Integer.parseInt(request.getParameter("studentId"));
+		// Recupera la información del empleado
+		int id = Integer.parseInt(request.getParameter("empleadoId"));
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
-		
-		// create a new student object
-		Empleado theStudent = new Empleado(id, firstName, lastName, email);
-		
-		// perform update on database
-		studentDbUtil.updateStudent(theStudent);
-		
-		// send them back to the "list students" page
-		listStudents(request, response);
+		//Crea un nuevo empleado y le asigna los datos
+		Empleado theEmpleado = new Empleado(id, firstName, lastName, email);
+		//Realiza la actualización al nuevo empleado
+		empleadoDbUtil.updateEmpleado(theEmpleado);
+		//Regresa a la lista de empleados
+		listEmpleado(request, response);
 		
 	}
-
-	private void loadStudent(HttpServletRequest request, HttpServletResponse response) 
+	//Cargar empleado
+	private void loadEmpleado(HttpServletRequest request, HttpServletResponse response) 
 		throws Exception {
-
-		// read student id from form data
-		String theStudentId = request.getParameter("studentId");
-		
-		// get student from database (db util)
-		Empleado theStudent = studentDbUtil.getStudent(theStudentId);
-		
-		// place student in the request attribute
-		request.setAttribute("THE_STUDENT", theStudent);
-		
-		// send to jsp page: update-student-form.jsp
+		//Recupera el empleado
+		String theEmpleadoId = request.getParameter("studentId");
+		//Toma al empleado de la bd(db util)
+		Empleado theEmpleado = empleadoDbUtil.getEmpleado(theEmpleadoId);
+		//Envia el empleado
+		request.setAttribute("THE_EMPLEADO", theEmpleado);
+		//Envia al jsp
 		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("/update-student-form.jsp");
+				request.getRequestDispatcher("/update-empleado-form.jsp");
 		dispatcher.forward(request, response);		
 	}
-
-	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// read student info from form data
+	//Añadir un empleado
+	private void addEmpleado(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//Recupera la información
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");		
-		
-		// create a new student object
-		Empleado theStudent = new Empleado(firstName, lastName, email);
-		
-		// add the student to the database
-		studentDbUtil.addStudent(theStudent);
-				
-		// send back to main page (the student list)
-		listStudents(request, response);
+		//Crea un nuevo empleado
+		Empleado theEmpleado = new Empleado(firstName, lastName, email);
+		//Lo añade a la bd
+		empleadoDbUtil.addEmpleado(theEmpleado);		
+		//Regresa a la lista de empleados
+		listEmpleado(request, response);
 	}
-
-	private void listStudents(HttpServletRequest request, HttpServletResponse response) 
+	//Ver lista de empleados
+	private void listEmpleado(HttpServletRequest request, HttpServletResponse response) 
 		throws Exception {
-
-		// get students from db util
-		List<Empleado> students = studentDbUtil.getStudents();
-		
-		// add students to the request
-		request.setAttribute("STUDENT_LIST", students);
-				
-		// send to JSP page (view)
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+		//Recupera la lista de empleados
+		List<Empleado> empleados = empleadoDbUtil.getEmpleados();
+		//Añade los empleados al request
+		request.setAttribute("EMPLEADO_LIST", empleados);	
+		//Envia a la JSP
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-empleados.jsp");
 		dispatcher.forward(request, response);
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

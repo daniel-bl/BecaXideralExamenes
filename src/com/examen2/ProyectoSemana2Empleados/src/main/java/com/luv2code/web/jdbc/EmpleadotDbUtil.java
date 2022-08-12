@@ -1,3 +1,8 @@
+/*	Becerril Becerril Daniel
+ * 	Proyecto Sistema de Empleados
+ * 	12/08/2022
+ * 	Conexión BD
+ * */
 package com.luv2code.web.jdbc;
 
 import java.sql.Connection;
@@ -10,34 +15,34 @@ import java.util.List;
 import javax.sql.DataSource;
 
 public class EmpleadotDbUtil {
-
+	//Fuente de datos
 	private DataSource dataSource;
-
+	//Constructor
 	public EmpleadotDbUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
-	
-	public List<Empleado> getStudents() throws Exception {
+	//Lista de los empleados
+	public List<Empleado> getEmpleados() throws Exception {
 		
-		List<Empleado> students = new ArrayList<>();
+		List<Empleado> empleados = new ArrayList<>();
 		
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		
 		try {
-			// get a connection
+			// abrir la conexión
 			myConn = dataSource.getConnection();
 			
-			// create sql statement
+			// create el statement
 			String sql = "select * from empleado order by last_name";
 			
 			myStmt = myConn.createStatement();
 			
-			// execute query
+			// guardar el query
 			myRs = myStmt.executeQuery(sql);
 			
-			// process result set
+			// obtener datos
 			while (myRs.next()) {
 				
 				// retrieve data from result set row
@@ -46,21 +51,20 @@ public class EmpleadotDbUtil {
 				String lastName = myRs.getString("last_name");
 				String email = myRs.getString("email");
 				
-				// create new student object
-				Empleado tempStudent = new Empleado(id, firstName, lastName, email);
-				
-				// add it to the list of students
-				students.add(tempStudent);				
+				// Crear un nuevo empleado
+				Empleado tempEmpleado = new Empleado(id, firstName, lastName, email);
+				// Añadirlo a la lista de empleados
+				empleados.add(tempEmpleado);				
 			}
 			
-			return students;		
+			return empleados;		
 		}
 		finally {
-			// close JDBC objects
+			// Cerrar la conexión
 			close(myConn, myStmt, myRs);
 		}		
 	}
-
+	//Método para cerrar la conexión
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 
 		try {
@@ -73,24 +77,23 @@ public class EmpleadotDbUtil {
 			}
 			
 			if (myConn != null) {
-				myConn.close();   // doesn't really close it ... just puts back in connection pool
+				myConn.close();   // regresa la conexión
 			}
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
 	}
-
-	public void addStudent(Empleado theStudent) throws Exception {
-
+	//Query añadir empleado
+	public void addEmpleado(Empleado theEmpleado) throws Exception {
+		//Objetos para la conexión
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
-			// get db connection
+			// hace la conexión
 			myConn = dataSource.getConnection();
-			
-			// create sql for insert
+			// insert
 			String sql = "insert into empleado "
 					   + "(first_name, last_name, email) "
 					   + "values (?, ?, ?)";
@@ -98,9 +101,9 @@ public class EmpleadotDbUtil {
 			myStmt = myConn.prepareStatement(sql);
 			
 			// set the param values for the student
-			myStmt.setString(1, theStudent.getFirstName());
-			myStmt.setString(2, theStudent.getLastName());
-			myStmt.setString(3, theStudent.getEmail());
+			myStmt.setString(1, theEmpleado.getFirstName());
+			myStmt.setString(2, theEmpleado.getLastName());
+			myStmt.setString(3, theEmpleado.getEmail());
 			
 			// execute sql insert
 			myStmt.execute();
@@ -110,130 +113,98 @@ public class EmpleadotDbUtil {
 			close(myConn, myStmt, null);
 		}
 	}
+	//Query consultar empleado
+	public Empleado getEmpleado(String theEmpleadoId) throws Exception {
 
-	public Empleado getStudent(String theStudentId) throws Exception {
-
-		Empleado theStudent = null;
-		
+		Empleado theEmpleado = null;
+		//Objetos para la conexión
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-		int studentId;
+		int empleadoId;
 		
 		try {
-			// convert student id to int
-			studentId = Integer.parseInt(theStudentId);
-			
-			// get connection to database
+			// convertir el entero del id
+			empleadoId = Integer.parseInt(theEmpleadoId);
+			// hacer conexión
 			myConn = dataSource.getConnection();
-			
-			// create sql to get selected student
+			// obtener el empleado con el id
 			String sql = "select * from empleado where id=?";
-			
-			// create prepared statement
+			// crear el statement
 			myStmt = myConn.prepareStatement(sql);
-			
-			// set params
-			myStmt.setInt(1, studentId);
-			
-			// execute statement
+			// enviar los datos
+			myStmt.setInt(1, empleadoId);
+			// statement
 			myRs = myStmt.executeQuery();
-			
-			// retrieve data from result set row
+			// recuperar la información
 			if (myRs.next()) {
 				String firstName = myRs.getString("first_name");
 				String lastName = myRs.getString("last_name");
 				String email = myRs.getString("email");
-				
-				// use the studentId during construction
-				theStudent = new Empleado(studentId, firstName, lastName, email);
+				// usar el id para crear un nuevo empleado
+				theEmpleado = new Empleado(empleadoId, firstName, lastName, email);
 			}
 			else {
-				throw new Exception("Could not find empleado id: " + studentId);
+				throw new Exception("Could not find empleado id: " + empleadoId);
 			}				
-			
-			return theStudent;
+			return theEmpleado;
 		}
 		finally {
-			// clean up JDBC objects
+			// cerrar conexiones
 			close(myConn, myStmt, myRs);
 		}
 	}
-
-	public void updateStudent(Empleado theStudent) throws Exception {
-		
+	//Query actualizar empleado
+	public void updateEmpleado(Empleado theEmpleado) throws Exception {
+		//objetos para la conexión
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 
 		try {
-			// get db connection
+			//hacer conexión
 			myConn = dataSource.getConnection();
-			
-			// create SQL update statement
+			// query para actualizar
 			String sql = "update empleado "
 						+ "set first_name=?, last_name=?, email=? "
 						+ "where id=?";
-			
-			// prepare statement
+			//statement
 			myStmt = myConn.prepareStatement(sql);
-			
-			// set params
-			myStmt.setString(1, theStudent.getFirstName());
-			myStmt.setString(2, theStudent.getLastName());
-			myStmt.setString(3, theStudent.getEmail());
-			myStmt.setInt(4, theStudent.getId());
-			
-			// execute SQL statement
+			//Actualizar con los nuevos datos
+			myStmt.setString(1, theEmpleado.getFirstName());
+			myStmt.setString(2, theEmpleado.getLastName());
+			myStmt.setString(3, theEmpleado.getEmail());
+			myStmt.setInt(4, theEmpleado.getId());
+			//ejecuta statement
 			myStmt.execute();
 		}
 		finally {
-			// clean up JDBC objects
+			// cierra conexión
 			close(myConn, myStmt, null);
 		}
 	}
-
-	public void deleteStudent(String theStudentId) throws Exception {
-
+	//Query borrar empleado
+	public void deleteEmpleado(String theEmpleadoId) throws Exception {
+		//Objetos para la conexión
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
-			// convert student id to int
-			int studentId = Integer.parseInt(theStudentId);
-			
-			// get connection to database
+			// castear id a entero
+			int studentId = Integer.parseInt(theEmpleadoId);
+			//hacer la conexión
 			myConn = dataSource.getConnection();
-			
-			// create sql to delete student
+			//Sentencia para borrar al empleado con el id
 			String sql = "delete from empleado where id=?";
-			
-			// prepare statement
+			//statement
 			myStmt = myConn.prepareStatement(sql);
-			
-			// set params
+			//Enviar el id
 			myStmt.setInt(1, studentId);
-			
-			// execute sql statement
+			//Ejecutar acción
 			myStmt.execute();
 		}
 		finally {
-			// clean up JDBC code
+			//Cerrar la conexión
 			close(myConn, myStmt, null);
 		}	
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
