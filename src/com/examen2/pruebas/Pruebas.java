@@ -68,4 +68,33 @@ public class Pruebas {
 		assertEquals(test,uh.construir());
 	}
 	
+	//Utilizando la forma compleja
+	@Test
+	void testUnidadHabitacional2() {
+		String test = "Se construyo una unidad habitacional";
+		//Construyo la unidad
+		Construccion uh = new UnidadHabitacional(
+				//Construyo 2 Edificios
+				new Edificio(
+						//Construyo casas en los edificios
+						new Casa(
+								//Construyo espacios en las casas
+								new Espacio("Recamara"), 
+								new Espacio("Baño")), 
+						new Casa(
+								new Espacio("Cocina"), 
+								new Espacio("Sala"))
+						), 
+				new Edificio(
+						new Casa(
+								new Espacio("Comedor"),
+								new Espacio("Cochera")), 
+						new Casa(
+								new Espacio("Cochera"), 
+								new Espacio("Cochera")
+								)
+						)
+				);
+		assertEquals(test,uh.construir());
+	}
 }
