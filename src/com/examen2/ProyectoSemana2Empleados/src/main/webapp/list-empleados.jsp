@@ -26,7 +26,7 @@
 			<div >
 				<!-- Boton de añadir -->
 				<input class="btn btn-primary mb-3" type="button" value="Agregar nuevo" 
-					   onclick="window.location.href='add-student-form.jsp'; return false;"
+					   onclick="window.location.href='add-empleado-form.jsp'; return false;"
 					   class="add-student-button"
 				/>
 				<!--Tabla con la lista de empleados-->
@@ -57,7 +57,7 @@
 								<a class="btn btn-success" href="${tempLink}">Actualizar</a> 
 								 | 
 								<a class="btn btn-danger" href="${deleteLink}"
-								onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
+								onclick="if (!(confirm('¿Está seguro de eliminar este empleado?'))) return false">
 								Eliminar</a>	
 							</td>
 						</tr>
