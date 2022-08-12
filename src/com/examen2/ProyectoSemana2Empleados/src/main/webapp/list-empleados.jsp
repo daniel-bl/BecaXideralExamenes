@@ -38,16 +38,16 @@
 						<th>Acción</th>
 					</tr>
 					<!--Ejecuta código java-->
-					<c:forEach var="tempStudent" items="${EMPLEADO_LIST}">
+					<c:forEach var="tempEmpleado" items="${EMPLEADO_LIST}">
 						<!-- For each cada empleado -->
 						<c:url var="tempLink" value="EmpleadoControllerServlet">
 							<c:param name="command" value="LOAD" />
-							<c:param name="studentId" value="${tempEmpleado.id}" />
+							<c:param name="empleadoId" value="${tempEmpleado.id}" />
 						</c:url>
 						<!-- Borrar empleado -->
 						<c:url var="deleteLink" value="EmpleadoControllerServlet">
 							<c:param name="command" value="DELETE" />
-							<c:param name="studentId" value="${tempEmpleado.id}" />
+							<c:param name="empleadoId" value="${tempEmpleado.id}" />
 						</c:url>													
 						<tr>
 							<td> ${tempEmpleado.firstName} </td>

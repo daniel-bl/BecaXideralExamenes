@@ -23,25 +23,21 @@ public class EmpleadotDbUtil {
 	}
 	//Lista de los empleados
 	public List<Empleado> getEmpleados() throws Exception {
-		
+		//Lista
 		List<Empleado> empleados = new ArrayList<>();
-		
+		//Objetos para la conexión
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		
 		try {
 			// abrir la conexión
-			myConn = dataSource.getConnection();
-			
+			myConn = dataSource.getConnection();	
 			// create el statement
-			String sql = "select * from empleado order by last_name";
-			
-			myStmt = myConn.createStatement();
-			
+			String sql = "select * from empleado order by last_name";	
+			myStmt = myConn.createStatement();	
 			// guardar el query
-			myRs = myStmt.executeQuery(sql);
-			
+			myRs = myStmt.executeQuery(sql);		
 			// obtener datos
 			while (myRs.next()) {
 				

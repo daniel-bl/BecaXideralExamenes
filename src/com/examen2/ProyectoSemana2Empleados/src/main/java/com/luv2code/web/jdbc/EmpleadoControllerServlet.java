@@ -114,7 +114,7 @@ public class EmpleadoControllerServlet extends HttpServlet {
 	private void loadEmpleado(HttpServletRequest request, HttpServletResponse response) 
 		throws Exception {
 		//Recupera el empleado
-		String theEmpleadoId = request.getParameter("studentId");
+		String theEmpleadoId = request.getParameter("empleadoId");
 		//Toma al empleado de la bd(db util)
 		Empleado theEmpleado = empleadoDbUtil.getEmpleado(theEmpleadoId);
 		//Envia el empleado

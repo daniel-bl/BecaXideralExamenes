@@ -24,7 +24,7 @@
 			<h3>Actualizar Empleado</h3>
 			<form action="EmpleadoControllerServlet" method="GET">
 				<input type="hidden" name="command" value="UPDATE" />
-				<input type="hidden" name="studentId" value="${THE_EMPLEADO.id}" />
+				<input type="hidden" name="empleadoId" value="${THE_EMPLEADO.id}" />
 				<!-- Tabla con los datos -->
 				<table>
 					<tbody>
