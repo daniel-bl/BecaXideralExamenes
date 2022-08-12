@@ -97,4 +97,23 @@ public class Pruebas {
 				);
 		assertEquals(test,uh.construir());
 	}
+	
+	//Test que fallan
+	@Test
+	void testEspacioUno() {
+		String testEsp1 = "Sala";
+		Construccion con = new Espacio(testEsp1);
+		assertEquals(testEsp1,con.construir());
+	}
+	//No funciona porque una casa necesita construccion no String
+	//Se compone de espacios no de un espacio
+	/*
+	void testEspacioDos() {
+		String testEsp1 = "Comedor";
+		Construccion con = new Casa(testEsp1);
+		assertEquals(testEsp1,con.construir());
+	}
+	*/
+	
+	
 }
